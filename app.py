@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, jsonify
 import joblib
 import os
 import numpy as np
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
