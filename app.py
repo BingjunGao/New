@@ -38,14 +38,16 @@ def predict():
     input_data = np.array(input_data).reshape(1, -1)     # 转换为 numpy 数组
 
     prediction = model.predict(input_data)
-    
-    # 将模型预测的数值转换为对应的诊断结果
-    if prediction == 0:
+
+    # 这里要取 prediction[0]，因为 predict 返回的是一个数组
+    if prediction[0] == 0:
         result = "No Arthritis"
-    elif prediction == 1:
+    elif prediction[0] == 1:
         result = "Rheumatoid arthritis"
-    elif prediction == 2:
+    elif prediction[0] == 2:
         result = "Osteoarthritis"
+    else:
+        result = "Unknown Result"
     
     # 将结果作为JSON返回给前端
     return jsonify({"result": result})
