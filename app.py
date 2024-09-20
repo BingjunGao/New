@@ -18,20 +18,26 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # 从表单获取输入数据
-    ap = request.form['ap']
-    crp = request.form['crp']
-    ca = request.form['ca']
-    ggt = request.form['ggt']
-    tp = request.form['tp']
-    ab = request.form['ab']
-    gc = request.form['gc']
-    nab = request.form['nab']
+    # 获取数据，假设数据是以 JSON 格式发送
+    data = request.json
+    
+    # 从数据中提取对应的变量值
+    input_data = [
+        data['ap'],
+        data['crp'],
+        data['ca'],
+        data['ggt'],
+        data['tp'],
+        data['ab'],
+        data['gc'],
+        data['nab']
+    ]
+    
+    # 假设 input_data 是你从前端获取的输入数据
+    input_data = [float(value) for value in input_data]  # 转换为浮点数类型
+    input_data = np.array(input_data).reshape(1, -1)     # 转换为 numpy 数组
 
-    # 模拟模型预测逻辑
-    # 实际上这里应为你模型的预测代码
-    # 假设模型返回结果为0, 1 或 2
-    prediction = model.predict([[ap, crp, ca, ggt, tp, ab, gc, nab]])  # 使用你的模型进行预测
+    prediction = model.predict(input_data)
     
     # 将模型预测的数值转换为对应的诊断结果
     if prediction == 0:
